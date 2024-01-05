@@ -3,7 +3,8 @@ import {
     getFirestore, collection, onSnapshot,
     addDoc, deleteDoc, doc,
     query, where,
-    orderBy, serverTimestamp
+    orderBy, serverTimestamp,
+    getDoc
 } from 'firebase/firestore'
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -65,4 +66,11 @@ deleteBookform.addEventListener('submit', (e) => {
             deleteBookform.reset()
         });
     
+})
+
+// get a single document
+const docRef = doc(db, 'books', 'FMe2XDIcrtdz6e1gdU0X')
+
+onSnapshot(docRef, (doc) => {
+    console.log(doc.data(), doc.id)
 })
