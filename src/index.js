@@ -1,6 +1,7 @@
 import {initializeApp} from 'firebase/app'
 import {
-    getFirestore, collection, getDocs
+    getFirestore, collection, getDocs,
+    addDoc, deleteDoc, doc
 } from 'firebase/firestore'
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -35,3 +36,31 @@ getDocs(colRef)
     .catch(err => {
         console.log(err.message)
     });
+
+// adding documents
+const addBookform = document.querySelector('.add')
+addBookform.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    addDoc(colRef, {
+        title: addBookform.title.value,
+        author: addBookform.author.value,
+    })
+    .then(() => {
+        addBookform.reset()
+    })
+})
+
+// deleting documents
+const deleteBookform = document.querySelector('.delete')
+deleteBookform.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const docRef = doc(db, 'books', deleteBookform.id.value)
+
+    deleteDoc(docRef)
+        .then(() => {
+            deleteBookform.reset()
+        });
+    
+})
